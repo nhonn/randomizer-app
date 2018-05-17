@@ -17,11 +17,12 @@ import {
 
 type Props = {};
 export default class App extends Component<Props> {
-  constructor(){
-    state = {
-      min = 0,
-      max = 100
-    }
+  constructor(props) {
+    super(props);
+    this.state = {
+      min: 0,
+      max: 100
+    };
   }
   render() {
     return (
@@ -29,11 +30,17 @@ export default class App extends Component<Props> {
         <Text>
           min
         </Text>
-        <TextInput onEndEditing={(text) => this.state.min = text } placeholder='from number'/>
+        <TextInput 
+          onChangeText={(text) => this.setState({min: Number.parseInt(text)})}
+          placeholder='from number'
+        />
         <Text>
           max
         </Text>
-        <TextInput onEndEditing={(text)=> this.state.max = text} placeholder='to number'/>
+        <TextInput 
+          onChangeText={(text) => this.setState({max: Number.parseInt(text)})}
+          placeholder='to number'
+        />
         <TouchableOpacity
           onPress={() => alert(randomize(this.state.min,this.state.max))}
           style={styles.buttonContainer}
@@ -45,9 +52,9 @@ export default class App extends Component<Props> {
   }
 }
 
-function randomize(min, max){
-  let randomNumber = Math.random(max - min) + min
-  return randomNumber
+randomize = (min, max) => {
+  random =  (Math.random() * (max - min) + min).toFixed(0)
+  return random
 }
 
 const styles = StyleSheet.create({
