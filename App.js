@@ -21,31 +21,40 @@ export default class App extends Component<Props> {
     super(props);
     this.state = {
       min: 0,
-      max: 100
+      max: 100,
+      result: ''
     };
   }
+
+  _onPress = (text) => {
+    this.setState({
+      result: text
+    })
+  }
+
   render() {
     return (
       <View style={styles.container}>
-        <Text>
-          min
-        </Text>
-        <TextInput 
-          onChangeText={(text) => this.setState({min: Number.parseInt(text)})}
-          placeholder='from number'
-        />
-        <Text>
-          max
-        </Text>
-        <TextInput 
-          onChangeText={(text) => this.setState({max: Number.parseInt(text)})}
-          placeholder='to number'
+        <Text style={styles.resultContainer}>{this.state.result}</Text>
+          <Text>
+            Range:
+          </Text>
+          <TextInput
+            onChangeText={(text) => this.setState({ min: Number.parseInt(text) })}
+            style={styles.textInputContainer}
+            keyboardType= "numeric"
+          />
+          <Text> - </Text>
+        <TextInput
+          onChangeText={(text) => this.setState({ max: Number.parseInt(text) })}
+          style={styles.textInputContainer}
+          keyboardType= "numeric"
         />
         <TouchableOpacity
-          onPress={() => alert(randomize(this.state.min,this.state.max))}
+          onPress={() => this._onPress(randomize(this.state.min, this.state.max))}
           style={styles.buttonContainer}
         >
-        <Text style={styles.buttonText}>GENERATE</Text>
+          <Text style={styles.buttonText}>GENERATE</Text>
         </TouchableOpacity>
       </View >
     );
@@ -53,7 +62,7 @@ export default class App extends Component<Props> {
 }
 
 randomize = (min, max) => {
-  random =  (Math.random() * (max - min) + min).toFixed(0)
+  random = (Math.random() * (max - min) + min).toFixed(0)
   return random
 }
 
@@ -66,7 +75,8 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     alignItems: 'center',
-    backgroundColor: '#f00f00'
+    backgroundColor: '#40e0d0',
+    top: 30,
   },
   buttonText: {
     textAlign: 'center',
@@ -78,9 +88,14 @@ const styles = StyleSheet.create({
     paddingTop: 5,
     paddingBottom: 5
   },
+  textInputContainer: {
+    backgroundColor: '#f1f1f1',
+    minWidth: 50,
+    textAlign: 'center',
+  },
   resultContainer: {
-    color: '#555555',
-    fontSize: 40,
+    fontSize: 80,
     fontWeight: 'bold',
+    color: '#40e0d0',
   }
 });
